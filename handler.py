@@ -138,14 +138,16 @@ def op_run(inp):
     if len(frame_list) < 20:
         raise RuntimeError(f"only {len(frame_list)} frames extracted — footage too short")
 
-    # 2 — COLMAP (CUDA SIFT), same camera model + matcher as the local lane
+    # 2 — COLMAP (CUDA SIFT), same camera model + matcher as the local lane.
+    # NOTE: COLMAP 3.x spells these Sift{Extraction,Matching}.use_gpu — the
+    # Feature{Extraction,Matching}.* names in worker.mjs are 4.x renames.
     db = os.path.join(work, "db.db")
     secs, _, _ = sh(["colmap", "feature_extractor", "--database_path", db, "--image_path", frames,
                      "--ImageReader.camera_model", "SIMPLE_RADIAL", "--ImageReader.single_camera", "1",
-                     "--FeatureExtraction.use_gpu", "1"])
+                     "--SiftExtraction.use_gpu", "1"])
     stats["steps"]["features"] = {"secs": round(secs)}
     secs, _, _ = sh(["colmap", "sequential_matcher", "--database_path", db,
-                     "--FeatureMatching.use_gpu", "1", "--SequentialMatching.overlap", "25"])
+                     "--SiftMatching.use_gpu", "1", "--SequentialMatching.overlap", "25"])
     stats["steps"]["match"] = {"secs": round(secs)}
     sparse = os.path.join(work, "sparse")
     os.makedirs(sparse, exist_ok=True)
