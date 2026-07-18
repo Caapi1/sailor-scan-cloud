@@ -37,6 +37,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libboost-program-options1.74.0 libboost-graph1.74.0 libflann1.9 \
     libfreeimage3 libmetis5 libgoogle-glog0v5 libsqlite3-0 libglew2.2 \
     libceres2 libcurl4 libgomp1 libgmp10 libmpfr6 \
+    libopengl0 libglx0 libgl1 libegl1 \
     libopencv-core4.5d libopencv-imgproc4.5d libopencv-imgcodecs4.5d \
     libopencv-calib3d4.5d libopencv-highgui4.5d libopencv-videoio4.5d \
     libopencv-features2d4.5d libopencv-flann4.5d \
